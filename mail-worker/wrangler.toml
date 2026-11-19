@@ -20,22 +20,22 @@ binding = "r2"			#r2对象存储绑定名默认不可修改
 bucket_name = "email"		#r2对象存储桶的名字
 
 #[[send_email]]
-#name = "email"			#CF发件, 配置后优先使用
+#name = "email"			# Cloudflare Email Sending; used first if configured
 
 [[send_email]]
-name = "forward"		#站内转发到已验证的其他邮箱，不限制单个地址
+name = "forward"		# Forward in-app mail to other verified addresses; not limited to one address
 
 [ai]
 binding = "ai"
 
 [assets]
-binding = "assets"		#静态资源绑定名默认不可修改
-directory = "./dist"	#前端vue项目打包的静态资源存放位置,默认dist
+binding = "assets"		# Assets binding name; do not change
+directory = "./dist"	# Built Vue assets directory, default dist
 not_found_handling = "single-page-application"
-run_worker_first = true
+run_worker_first = [ "/api/*", "/oss/*", "/static/*", "/attachments/*", "/proxy", "/realtime" ]
 
 [triggers]
-crons = ["0 * * * *"]	#每小时执行；resetDaySendCount 仅在 UTC 0 点生效
+crons = ["0 * * * *"]	# Hourly cron; resetDaySendCount only runs at UTC 0
 
 [[durable_objects.bindings]]
 name = "ws"
